@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebAPI.Controllers
 {
@@ -18,8 +19,15 @@ namespace WebAPI.Controllers
 
         // GET api/values/5
         [HttpGet("{id}")]
+        [Authorize(Roles ="AUX")]
         public string Get(int id)
         {
+            using(DataAccesLayer.ApplicationDbContext db = new DataAccesLayer.ApplicationDbContext())
+            {
+                db.Table1.Add(new Shared.Entities.Table1() { Descripcion = "Prueba " + id.ToString(), Fecha = DateTime.Now, Activo = true });
+                db.SaveChanges();
+            }
+
             return "value";
         }
 

@@ -5,6 +5,10 @@ VisualStudioVersion = 15.0.27004.2005
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAPI", "WebAPI\WebAPI.csproj", "{516BDC57-D861-4582-BF4B-8C92702178A8}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shared", "Shared\Shared.csproj", "{9D75974C-EBD9-4225-8701-303E01321F85}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccesLayer", "DataAccesLayer\DataAccesLayer.csproj", "{4F252142-9F6B-46E3-99A0-D29B07A8FA90}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{516BDC57-D861-4582-BF4B-8C92702178A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{516BDC57-D861-4582-BF4B-8C92702178A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{516BDC57-D861-4582-BF4B-8C92702178A8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9D75974C-EBD9-4225-8701-303E01321F85}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9D75974C-EBD9-4225-8701-303E01321F85}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9D75974C-EBD9-4225-8701-303E01321F85}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9D75974C-EBD9-4225-8701-303E01321F85}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F252142-9F6B-46E3-99A0-D29B07A8FA90}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F252142-9F6B-46E3-99A0-D29B07A8FA90}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F252142-9F6B-46E3-99A0-D29B07A8FA90}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F252142-9F6B-46E3-99A0-D29B07A8FA90}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
