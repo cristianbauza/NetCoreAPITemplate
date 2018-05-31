@@ -40,7 +40,7 @@ namespace WebAPI.Controllers
             if (result.Succeeded)
             {
                 var appUser = _userManager.Users.SingleOrDefault(r => r.Email == model.Email);
-                return GenerateJwtToken(model.Email, appUser);
+                return GenerateJwtTokenAsync(model.Email, appUser);
             }
 
             throw new ApplicationException("INVALID_LOGIN_ATTEMPT");
@@ -60,30 +60,26 @@ namespace WebAPI.Controllers
             if (result.Succeeded)
             {
                 await _signInManager.SignInAsync(user, false);
-                return GenerateJwtToken(model.Email, user);
+                return GenerateJwtTokenAsync(model.Email, user);
             }
 
             throw new ApplicationException("UNKNOWN_ERROR");
         }
 
-
-
-
-        [Authorize]
-        [HttpGet]
-        public string Protected() => "Protected area";
-
-
-
-
-        private object GenerateJwtToken(string email, IdentityUser user)
+        private async Task<object> GenerateJwtTokenAsync(string email, IdentityUser user)
         {
             var claims = new List<Claim>
             {
                 new Claim(JwtRegisteredClaimNames.Sub, email),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new Claim(ClaimTypes.NameIdentifier, user.Id)
+                new Claim(ClaimTypes.NameIdentifier, user.Id),
             };
+
+            var roles = await _userManager.GetRolesAsync(user);
+            foreach(string r in roles)
+            {
+                claims.Add(new Claim(ClaimTypes.Role, r));
+            }
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JwtKey"]));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
