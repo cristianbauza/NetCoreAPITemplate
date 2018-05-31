@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
+using Shared.Entities;
 
 namespace WebAPI.Controllers
 {
@@ -19,16 +20,18 @@ namespace WebAPI.Controllers
 
         // GET api/values/5
         [HttpGet("{id}")]
-        [Authorize(Roles ="AUX")]
-        public string Get(int id)
+        [Authorize(Roles ="USER")]
+        public ActionResult Get(int id)
         {
-            using(DataAccesLayer.ApplicationDbContext db = new DataAccesLayer.ApplicationDbContext())
+            Table1 result = new Table1() { Descripcion = "Prueba " + id.ToString(), Fecha = DateTime.Now, Activo = true };
+
+            using (DataAccesLayer.ApplicationDbContext db = new DataAccesLayer.ApplicationDbContext())
             {
-                db.Table1.Add(new Shared.Entities.Table1() { Descripcion = "Prueba " + id.ToString(), Fecha = DateTime.Now, Activo = true });
+                db.Table1.Add(result);
                 db.SaveChanges();
             }
 
-            return "value";
+            return Ok(result);
         }
 
         // POST api/values

@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authorization;
+using Shared.DTOs;
 
 namespace WebAPI.Controllers
 {
@@ -20,16 +21,19 @@ namespace WebAPI.Controllers
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly IConfiguration _configuration;
+        private readonly RoleManager<IdentityRole> _roleManager;
 
         public AccountController(
             UserManager<IdentityUser> userManager,
             SignInManager<IdentityUser> signInManager,
-            IConfiguration configuration
+            IConfiguration configuration,
+            RoleManager<IdentityRole> rolManager
             )
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _configuration = configuration;
+            _roleManager = rolManager;
         }
 
         [HttpPost]
@@ -47,7 +51,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<object> Register([FromBody] RegisterDto model)
+        public async Task<object> Register([FromBody] RegistroDto model)
         {
             var user = new IdentityUser
             {
@@ -76,7 +80,8 @@ namespace WebAPI.Controllers
             };
 
             var roles = await _userManager.GetRolesAsync(user);
-            foreach(string r in roles)
+
+            foreach (string r in roles)
             {
                 claims.Add(new Claim(ClaimTypes.Role, r));
             }
@@ -94,26 +99,6 @@ namespace WebAPI.Controllers
             );
 
             return new JwtSecurityTokenHandler().WriteToken(token);
-        }
-
-        public class LoginDto
-        {
-            [Required]
-            public string Email { get; set; }
-
-            [Required]
-            public string Password { get; set; }
-
-        }
-
-        public class RegisterDto
-        {
-            [Required]
-            public string Email { get; set; }
-
-            [Required]
-            [StringLength(100, ErrorMessage = "PASSWORD_MIN_LENGTH", MinimumLength = 6)]
-            public string Password { get; set; }
         }
     }
 }
