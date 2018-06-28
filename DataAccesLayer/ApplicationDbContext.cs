@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using DataAccesLayer.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Shared.Entities;
 using System;
@@ -15,9 +16,9 @@ namespace DataAccesLayer
             optionsBuilder.UseMySql(GetConnectionString());
         }
 
-        public DbSet<Table1> Table1 { get; set; }
+        internal DbSet<Personas> Personas { get; set; }
 
-        public static string GetConnectionString()
+        private static string GetConnectionString()
         {
             const string databaseName = "Template";
             const string databaseUser = "root";

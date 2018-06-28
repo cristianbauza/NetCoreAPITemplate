@@ -11,9 +11,10 @@ using System;
 namespace DataAccesLayer.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180626002414_Create_Tabla_Personas")]
+    partial class Create_Tabla_Personas
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -22,7 +23,7 @@ namespace DataAccesLayer.Migrations
 
             modelBuilder.Entity("DataAccesLayer.Models.Personas", b =>
                 {
-                    b.Property<long>("Id_Persona")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn);
 
@@ -45,7 +46,7 @@ namespace DataAccesLayer.Migrations
                     b.Property<string>("SegundoNombre")
                         .HasMaxLength(128);
 
-                    b.HasKey("Id_Persona");
+                    b.HasKey("Id");
 
                     b.ToTable("Personas");
                 });
@@ -205,6 +206,23 @@ namespace DataAccesLayer.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("Shared.Entities.Table1", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("Activo");
+
+                    b.Property<string>("Descripcion");
+
+                    b.Property<DateTime>("Fecha");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Table1");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

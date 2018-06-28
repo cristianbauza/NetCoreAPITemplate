@@ -7,11 +7,14 @@ using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using BusinessLayer.Interfaces;
 
 namespace WebAPI
 {
     public class Program
     {
+        public static IBL_Personas blPersonas;
+
         public static void Main(string[] args)
         {
             BuildWebHost(args).Run();

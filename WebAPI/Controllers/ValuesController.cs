@@ -19,20 +19,20 @@ namespace WebAPI.Controllers
         }
 
         // GET api/values/5
-        [HttpGet("{id}")]
-        [Authorize(Roles ="USER")]
-        public ActionResult Get(int id)
-        {
-            Table1 result = new Table1() { Descripcion = "Prueba " + id.ToString(), Fecha = DateTime.Now, Activo = true };
+        //[HttpGet("{id}")]
+        //[Authorize(Roles ="USER")]
+        //public ActionResult Get(int id)
+        //{
+        //    Table1 result = new Table1() { Descripcion = "Prueba " + id.ToString(), Fecha = DateTime.Now, Activo = true };
 
-            using (DataAccesLayer.ApplicationDbContext db = new DataAccesLayer.ApplicationDbContext())
-            {
-                db.Table1.Add(result);
-                db.SaveChanges();
-            }
+        //    using (DataAccesLayer.ApplicationDbContext db = new DataAccesLayer.ApplicationDbContext())
+        //    {
+        //        db.Table1.Add(result);
+        //        db.SaveChanges();
+        //    }
 
-            return Ok(result);
-        }
+        //    return Ok(result);
+        //}
 
         // POST api/values
         [HttpPost]

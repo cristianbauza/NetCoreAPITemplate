@@ -15,6 +15,9 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using DataAccesLayer;
+using NSwag.AspNetCore;
+using System.Reflection;
+using WebAPI.Infreaestructure;
 
 namespace WebAPI
 {
@@ -23,6 +26,7 @@ namespace WebAPI
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            SetupDependencies();
         }
 
         public IConfiguration Configuration { get; }
@@ -70,6 +74,9 @@ namespace WebAPI
 
             // ===== Add MVC ========
             services.AddMvc();
+
+            // Add swagger
+            services.AddSwaggerDocumentation();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -83,14 +90,28 @@ namespace WebAPI
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseSwaggerDocumentation();
             }
 
             app.UseAuthentication();
+
+            // Swagger
+            app.UseSwaggerUi(typeof(Startup).GetTypeInfo().Assembly, settings =>
+            {
+                settings.GeneratorSettings.DefaultPropertyNameHandling =
+                    NJsonSchema.PropertyNameHandling.CamelCase;
+
+            });
 
             app.UseMvc();
 
             // ===== Create tables ======
             dbContext.Database.EnsureCreated();
+        }
+
+        private static void SetupDependencies()
+        {
+            Program.blPersonas = new BusinessLayer.Implementations.BL_Personas(new DataAccesLayer.DALs.Implementatios.DAL_Personas_EFCore());
         }
     }
 }

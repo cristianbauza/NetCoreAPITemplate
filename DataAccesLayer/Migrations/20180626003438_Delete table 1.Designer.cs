@@ -11,9 +11,10 @@ using System;
 namespace DataAccesLayer.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180626003438_Delete table 1")]
+    partial class Deletetable1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -22,7 +23,7 @@ namespace DataAccesLayer.Migrations
 
             modelBuilder.Entity("DataAccesLayer.Models.Personas", b =>
                 {
-                    b.Property<long>("Id_Persona")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn);
 
@@ -45,7 +46,7 @@ namespace DataAccesLayer.Migrations
                     b.Property<string>("SegundoNombre")
                         .HasMaxLength(128);
 
-                    b.HasKey("Id_Persona");
+                    b.HasKey("Id");
 
                     b.ToTable("Personas");
                 });
