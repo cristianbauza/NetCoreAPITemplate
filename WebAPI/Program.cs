@@ -13,8 +13,6 @@ namespace WebAPI
 {
     public class Program
     {
-        public static IBL_Personas blPersonas;
-
         public static void Main(string[] args)
         {
             BuildWebHost(args).Run();

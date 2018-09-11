@@ -18,18 +18,23 @@ using DataAccesLayer;
 using NSwag.AspNetCore;
 using System.Reflection;
 using WebAPI.Infreaestructure;
+using Microsoft.EntityFrameworkCore;
+using BusinessLayer.Interfaces;
+using BusinessLayer.Implementations;
+using DataAccesLayer.DALs.Interfaces;
+using DataAccesLayer.DALs.Implementatios;
 
 namespace WebAPI
 {
     public class Startup
     {
+        public IConfiguration Configuration { get; }
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
             SetupDependencies();
         }
-
-        public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -77,6 +82,13 @@ namespace WebAPI
 
             // Add swagger
             services.AddSwaggerDocumentation();
+
+
+            // Agregamos las interfaces de la capa de acceso a datos.
+            services.AddTransient<IDAL_Personas, DAL_Personas_EFCore>();
+
+            // Agregamos las interfaces de la capa de negocios.
+            services.AddTransient<IBL_Personas, BL_Personas>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -107,11 +119,12 @@ namespace WebAPI
 
             // ===== Create tables ======
             dbContext.Database.EnsureCreated();
+            dbContext.Database.Migrate();
         }
 
         private static void SetupDependencies()
         {
-            Program.blPersonas = new BusinessLayer.Implementations.BL_Personas(new DataAccesLayer.DALs.Implementatios.DAL_Personas_EFCore());
+            //Program.blPersonas = new BusinessLayer.Implementations.BL_Personas(new DataAccesLayer.DALs.Implementatios.DAL_Personas_EFCore());
         }
     }
 }

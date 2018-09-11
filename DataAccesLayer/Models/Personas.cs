@@ -31,6 +31,9 @@ namespace DataAccesLayer.Models
         [MaxLength(128)]
         public string Documento { get; set; }
 
+        [MaxLength(128)]
+        public string TipoDocumento { get; set; }
+
         public Persona GetEntity()
         {
             return new Persona()
@@ -55,7 +58,8 @@ namespace DataAccesLayer.Models
                 PrimerApellido = x.PrimerApellido,
                 PrimerNombre = x.PrimerNombre,
                 SegundoApellido = x.SegundoApellido,
-                SegundoNombre = x.SegundoNombre
+                SegundoNombre = x.SegundoNombre,
+                TipoDocumento = x.TipoDocumento
             };
         }
     }

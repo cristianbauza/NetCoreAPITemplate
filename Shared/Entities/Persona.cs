@@ -30,5 +30,8 @@ namespace Shared.Entities
 
         [MaxLength(128, ErrorMessageResourceName = "El largo maximo del documento debe ser de 128 caracteres.")]
         public string Documento { get; set; }
+
+        [MaxLength(128, ErrorMessageResourceName = "El largo maximo del tipo de documento debe ser de 128 caracteres.")]
+        public string TipoDocumento { get; set; }
     }
 }

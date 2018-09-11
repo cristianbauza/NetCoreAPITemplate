@@ -17,9 +17,9 @@ namespace WebAPI.Controllers
     {
         private IBL_Personas bl;
 
-        public PersonasController()
+        public PersonasController(IBL_Personas _bl)
         {
-            bl = Program.blPersonas;
+            bl = _bl;
         }
 
         // GET: api/Personas
