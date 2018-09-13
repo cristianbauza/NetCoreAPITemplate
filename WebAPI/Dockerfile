@@ -8,7 +8,7 @@ RUN dotnet restore
 
 # Copy everything else and build
 COPY . .
-RUN dotnet publish WebAPI.csproj -c Release -o out
+RUN dotnet publish WebAPI/WebAPI.csproj -c Release -o out
 
 # Build runtime image
 FROM microsoft/aspnetcore:2.0
