@@ -4,8 +4,8 @@ services:
   WebAPI:
     image: webapitemplate
     build:
-      context: ./WebAPI
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: WebAPI/Dockerfile
     ports:
       - 8082:80
     links:
