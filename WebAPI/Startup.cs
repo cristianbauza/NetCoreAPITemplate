@@ -119,7 +119,8 @@ namespace WebAPI
 
             // ===== Create tables ======
             dbContext.Database.EnsureCreated();
-            dbContext.Database.Migrate();
+            if (!env.IsDevelopment())
+                dbContext.Database.Migrate();
         }
 
         private static void SetupDependencies()
