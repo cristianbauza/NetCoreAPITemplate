@@ -13,5 +13,5 @@ RUN dotnet publish WebAPI/WebAPI.csproj -c Release -o out
 # Build runtime image
 FROM microsoft/aspnetcore:2.0
 WORKDIR /app
-COPY --from=build-env /app/WebAPI/out .
+COPY --from=build-env /app/WebAPI/WebAPI/out .
 ENTRYPOINT ["dotnet", "WebAPI.dll"]

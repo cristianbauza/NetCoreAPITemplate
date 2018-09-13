@@ -20,11 +20,11 @@ namespace DataAccesLayer
 
         private static string GetConnectionString()
         {
-            const string databaseName = "Template";
-            const string databaseUser = "root";
-            const string databasePass = "root";
+            const string databaseName = "webapi";
+            const string databaseUser = "webapi";
+            const string databasePass = "webapi";
 
-            return $"Server=192.168.99.100;" +
+            return $"Server=db;" +
                     $"database={databaseName};" +
                     $"uid={databaseUser};" +
                     $"pwd={databasePass};" +

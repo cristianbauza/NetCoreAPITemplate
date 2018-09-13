@@ -118,7 +118,7 @@ namespace WebAPI
             app.UseMvc();
 
             // ===== Create tables ======
-            dbContext.Database.EnsureCreated();
+            //dbContext.Database.EnsureCreated();
             if (!env.IsDevelopment())
                 dbContext.Database.Migrate();
         }
