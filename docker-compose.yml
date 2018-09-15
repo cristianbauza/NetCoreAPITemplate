@@ -6,6 +6,8 @@ services:
     build:
       context: .
       dockerfile: WebAPI/Dockerfile
+    volumes:
+      - ./loggs:/app/Loggs
     ports:
       - 8082:80
     links:

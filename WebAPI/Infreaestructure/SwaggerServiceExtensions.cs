@@ -11,7 +11,7 @@ namespace WebAPI.Infreaestructure
         {
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1.0", new Info { Title = "Main API v1.0", Version = "v1.0" });
+                c.SwaggerDoc("v1.0", new Info { Title = ".NET Core API Template With MySQL - v1.0", Version = "v1.0" });
 
                 // Swagger 2.+ support
                 var security = new Dictionary<string, IEnumerable<string>>
@@ -39,7 +39,7 @@ namespace WebAPI.Infreaestructure
             {
                 c.SwaggerEndpoint("/swagger/v1.0/swagger.json", "Versioned API v1.0");
 
-                c.DocumentTitle = "Title Documentation";
+                c.DocumentTitle = ".NET Core API Template With MySQL - v1.0";
                 c.DocExpansion(DocExpansion.None);
             });
 

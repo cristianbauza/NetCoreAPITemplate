@@ -70,7 +70,6 @@ namespace WebAPI
                     cfg.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidIssuer = Configuration["JwtIssuer"],
-
                         ValidAudience = Configuration["JwtIssuer"],
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JwtKey"])),
                         ClockSkew = TimeSpan.Zero // remove delay of token when expire
@@ -82,7 +81,6 @@ namespace WebAPI
 
             // Add swagger
             services.AddSwaggerDocumentation();
-
 
             // Agregamos las interfaces de la capa de acceso a datos.
             services.AddTransient<IDAL_Personas, DAL_Personas_EFCore>();
@@ -99,6 +97,8 @@ namespace WebAPI
             ILoggerFactory loggerFactory
         )
         {
+            loggerFactory.AddFile("Loggs/apiLogg-{Date}.txt");
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -116,6 +116,8 @@ namespace WebAPI
             });
 
             app.UseMvc();
+
+            Task.Delay(10000).Wait();
 
             // ===== Create tables ======
             //dbContext.Database.EnsureCreated();
