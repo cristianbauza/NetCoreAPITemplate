@@ -98,6 +98,7 @@ namespace WebAPI
         )
         {
             loggerFactory.AddFile("Loggs/apiLogg-{Date}.txt");
+            loggerFactory.AddConsole();            
 
             if (env.IsDevelopment())
             {

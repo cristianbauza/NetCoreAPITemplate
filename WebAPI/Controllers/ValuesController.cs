@@ -24,7 +24,6 @@ namespace WebAPI.Controllers
         public IEnumerable<string> Get()
         {
             Logger.LogInformation("Get Values");
-            throw new Exception("Probando Excepcion.");
             return new string[] { "value1", "value2", "value3" };
         }
 
