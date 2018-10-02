@@ -33,7 +33,6 @@ namespace WebAPI
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-            SetupDependencies();
         }
 
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -103,32 +102,22 @@ namespace WebAPI
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwaggerDocumentation();
+                //app.UseSwaggerDocumentation();
             }
+            app.UseSwaggerDocumentation();
 
             app.UseAuthentication();
 
-            // Swagger
-            app.UseSwaggerUi(typeof(Startup).GetTypeInfo().Assembly, settings =>
-            {
-                settings.GeneratorSettings.DefaultPropertyNameHandling =
-                    NJsonSchema.PropertyNameHandling.CamelCase;
-
-            });
-
             app.UseMvc();
 
+            // Colocamos un delay de 10 s. para que le de tiempo a levantar 
+            // el container de la base de datos.
             Task.Delay(10000).Wait();
 
             // ===== Create tables ======
             //dbContext.Database.EnsureCreated();
             if (!env.IsDevelopment())
                 dbContext.Database.Migrate();
-        }
-
-        private static void SetupDependencies()
-        {
-            //Program.blPersonas = new BusinessLayer.Implementations.BL_Personas(new DataAccesLayer.DALs.Implementatios.DAL_Personas_EFCore());
         }
     }
 }
