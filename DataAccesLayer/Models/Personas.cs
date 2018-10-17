@@ -34,6 +34,9 @@ namespace DataAccesLayer.Models
         [MaxLength(128)]
         public string TipoDocumento { get; set; }
 
+        List<Personas_Contactos> Contactos { get; set; }
+
+
         public Persona GetEntity()
         {
             return new Persona()
@@ -46,6 +49,15 @@ namespace DataAccesLayer.Models
                 SegundoApellido = SegundoApellido,
                 SegundoNombre = SegundoNombre
             };
+        }
+
+        public Persona GetEntity(bool addContactos)
+        {
+            Persona result = GetEntity();
+            if (addContactos)
+                Contactos.ForEach(x => result.Contactos.Add(x.GetEntity()));
+
+            return result;
         }
 
         public static Personas GetEntityToSave(Persona x)

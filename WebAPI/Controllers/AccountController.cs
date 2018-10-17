@@ -44,7 +44,8 @@ namespace WebAPI.Controllers
             if (result.Succeeded)
             {
                 var appUser = _userManager.Users.SingleOrDefault(r => r.Email == model.Email);
-                return GenerateJwtTokenAsync(model.Email, appUser);
+                var res = GenerateJwtTokenAsync(model.Email, appUser);
+                return res;
             }
 
             throw new ApplicationException("INVALID_LOGIN_ATTEMPT");

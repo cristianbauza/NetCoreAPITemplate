@@ -53,6 +53,25 @@ namespace DataAccesLayer.Migrations
                     b.ToTable("Personas");
                 });
 
+            modelBuilder.Entity("DataAccesLayer.Models.Personas_Contactos", b =>
+                {
+                    b.Property<long>("Id_PerCont")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Contacto")
+                        .IsRequired()
+                        .HasMaxLength(128);
+
+                    b.Property<long>("Id_Persona");
+
+                    b.HasKey("Id_PerCont");
+
+                    b.HasIndex("Id_Persona");
+
+                    b.ToTable("Personas_Contactos");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
@@ -208,6 +227,14 @@ namespace DataAccesLayer.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("DataAccesLayer.Models.Personas_Contactos", b =>
+                {
+                    b.HasOne("DataAccesLayer.Models.Personas", "Persona")
+                        .WithMany()
+                        .HasForeignKey("Id_Persona")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

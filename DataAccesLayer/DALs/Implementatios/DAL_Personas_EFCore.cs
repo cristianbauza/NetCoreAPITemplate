@@ -10,44 +10,39 @@ namespace DataAccesLayer.DALs.Implementatios
 {
     public class DAL_Personas_EFCore : IDAL_Personas
     {
+        private readonly ApplicationDbContext _db;
+
+        public DAL_Personas_EFCore(ApplicationDbContext db)
+        {
+            _db = db;
+        }
+
         public List<Persona> GetAll()
         {
-            using (ApplicationDbContext db = new ApplicationDbContext())
-            {
-                List<Persona> result = new List<Persona>();
-                db.Personas.ToList().ForEach(y => result.Add(y.GetEntity()));
-                return result;
-            }
+            List<Persona> result = new List<Persona>();
+            _db.Personas.ToList().ForEach(y => result.Add(y.GetEntity()));
+            return result;
         }
 
         public Persona Get(long id)
         {
-            using (ApplicationDbContext db = new ApplicationDbContext())
-            {
-                return db.Personas.Find(id)?.GetEntity();
-            }
+            return _db.Personas.Find(id)?.GetEntity();
         }
 
         public Persona Add(Persona x)
         {
-            using (ApplicationDbContext db = new ApplicationDbContext())
-            {
-                Personas aux = Personas.GetEntityToSave(x);
-                db.Personas.Add(aux);
-                db.SaveChanges();
-                return aux.GetEntity();
-            }
+            Personas aux = Personas.GetEntityToSave(x);
+            _db.Personas.Add(aux);
+            _db.SaveChanges();
+            return aux.GetEntity();
         }
 
         public Persona Update(Persona x)
         {
-            using (ApplicationDbContext db = new ApplicationDbContext())
-            {
-                Personas aux = Personas.GetEntityToSave(x);
-                db.Personas.Attach(aux);
-                db.SaveChanges();
-                return aux.GetEntity();
-            }
+            Personas aux = Personas.GetEntityToSave(x);
+            _db.Personas.Attach(aux);
+            _db.SaveChanges();
+            return aux.GetEntity();
         }
     }
 }

@@ -11,25 +11,11 @@ namespace DataAccesLayer
 {
     public class ApplicationDbContext : IdentityDbContext
     {
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseMySql(GetConnectionString());
-        }
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) 
+            : base(options)
+        { }
 
         internal DbSet<Personas> Personas { get; set; }
-
-        private static string GetConnectionString()
-        {
-            const string databaseHost = "192.168.99.100";
-            const string databaseName = "webapi";
-            const string databaseUser = "root";
-            const string databasePass = "root";
-
-            return $"Server={databaseHost};" +
-                    $"database={databaseName};" +
-                    $"uid={databaseUser};" +
-                    $"pwd={databasePass};" +
-                    $"pooling=true;";
-        }
+        internal DbSet<Personas_Contactos> Personas_Contactos { get; set; }
     }
 }

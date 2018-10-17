@@ -7,6 +7,11 @@ namespace Shared.Entities
 {
     public class Persona
     {
+        public Persona()
+        {
+            Contactos = new List<PersonaContacto>();
+        }
+
         public long Id_Persona { get; set; }
 
         [MaxLength(128, ErrorMessageResourceName = "El largo maximo del primer nombre debe ser de 128 caracteres."), 
@@ -33,5 +38,7 @@ namespace Shared.Entities
 
         [MaxLength(128, ErrorMessageResourceName = "El largo maximo del tipo de documento debe ser de 128 caracteres.")]
         public string TipoDocumento { get; set; }
+
+        public List<PersonaContacto> Contactos { get; set; }
     }
 }

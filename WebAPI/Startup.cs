@@ -39,7 +39,7 @@ namespace WebAPI
         public void ConfigureServices(IServiceCollection services)
         {
             // ===== Add our DbContext ========
-            services.AddDbContext<ApplicationDbContext>();
+            services.AddDbContext<ApplicationDbContext>(options => options.UseMySql(GetConnectionString()));
 
             // ===== Add Identity ========
             services.AddIdentity<IdentityUser, IdentityRole>(options => {
@@ -118,6 +118,20 @@ namespace WebAPI
             //dbContext.Database.EnsureCreated();
             //if (!env.IsDevelopment())
                 dbContext.Database.Migrate();
+        }
+
+        private static string GetConnectionString()
+        {
+            const string databaseHost = "192.168.99.100";
+            const string databaseName = "webapi";
+            const string databaseUser = "root";
+            const string databasePass = "root";
+
+            return $"Server={databaseHost};" +
+                    $"database={databaseName};" +
+                    $"uid={databaseUser};" +
+                    $"pwd={databasePass};" +
+                    $"pooling=true;";
         }
     }
 }
