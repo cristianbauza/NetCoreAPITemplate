@@ -17,6 +17,7 @@ namespace DataAccesLayer.Models
         public string Contacto { get; set; }
 
         public long Id_Persona { get; set; }
+        //[ForeignKey("Id_Persona")]
         public Personas Persona { get; set; }
 
         public PersonaContacto GetEntity()

@@ -15,6 +15,17 @@ namespace DataAccesLayer
             : base(options)
         { }
 
+
+        //protected override void OnModelCreating(ModelBuilder modelBuilder)
+        //{
+        //    modelBuilder.Entity<Personas_Contactos>(entity =>
+        //    {
+        //    entity.HasOne(d => d.Persona)
+        //        .WithMany(p => p.)
+        //            .HasForeignKey(d => d.);
+        //    });
+        //}
+
         internal DbSet<Personas> Personas { get; set; }
         internal DbSet<Personas_Contactos> Personas_Contactos { get; set; }
     }

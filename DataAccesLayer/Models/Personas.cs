@@ -9,6 +9,11 @@ namespace DataAccesLayer.Models
 {
     internal class Personas
     {
+        //public Personas()
+        //{
+        //    Contactos = new List<Personas_Contactos>();
+        //}
+
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
         public long Id_Persona { get; set; }
@@ -34,7 +39,8 @@ namespace DataAccesLayer.Models
         [MaxLength(128)]
         public string TipoDocumento { get; set; }
 
-        List<Personas_Contactos> Contactos { get; set; }
+        [InverseProperty("Persona")]
+        public virtual List<Personas_Contactos> Personas_Contactos { get; set; }
 
 
         public Persona GetEntity()
@@ -55,7 +61,7 @@ namespace DataAccesLayer.Models
         {
             Persona result = GetEntity();
             if (addContactos)
-                Contactos.ForEach(x => result.Contactos.Add(x.GetEntity()));
+                Personas_Contactos.ForEach(x => result.Contactos.Add(x.GetEntity()));
 
             return result;
         }
