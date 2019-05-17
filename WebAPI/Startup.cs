@@ -15,7 +15,6 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using DataAccesLayer;
-using NSwag.AspNetCore;
 using System.Reflection;
 using WebAPI.Infreaestructure;
 using Microsoft.EntityFrameworkCore;

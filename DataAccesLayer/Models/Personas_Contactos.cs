@@ -16,11 +16,9 @@ namespace DataAccesLayer.Models
         [MaxLength(128), MinLength(3), Required]
         public string Contacto { get; set; }
 
-        public long Id_Persona { get; set; }
 
         public Personas Persona { get; set; }
 
-        public long Id_PerContTipo { get; set; }
 
         public Personas_Contactos_Tipos TipoContacto { get; set; }
 
