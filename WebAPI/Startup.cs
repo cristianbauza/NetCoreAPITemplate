@@ -122,10 +122,10 @@ namespace WebAPI
 
         private static string GetConnectionString()
         {
-            const string databaseHost = "192.168.99.100";
+            const string databaseHost = "localhost";
             const string databaseName = "webapi";
             const string databaseUser = "root";
-            const string databasePass = "root";
+            const string databasePass = "apache*2013";
 
             return $"Server={databaseHost};" +
                     $"database={databaseName};" +

@@ -17,8 +17,12 @@ namespace DataAccesLayer.Models
         public string Contacto { get; set; }
 
         public long Id_Persona { get; set; }
-        //[ForeignKey("Id_Persona")]
+
         public Personas Persona { get; set; }
+
+        public long Id_PerContTipo { get; set; }
+
+        public Personas_Contactos_Tipos TipoContacto { get; set; }
 
         public PersonaContacto GetEntity()
         {
