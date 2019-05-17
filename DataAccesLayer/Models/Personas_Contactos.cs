@@ -7,7 +7,7 @@ using Shared.Entities;
 
 namespace DataAccesLayer.Models
 {
-    internal class Personas_Contactos
+    public class Personas_Contactos
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]

@@ -6,7 +6,7 @@ using System.Text;
 
 namespace DataAccesLayer.Models
 {
-    internal class Personas_Contactos_Tipos
+    public class Personas_Contactos_Tipos
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]

@@ -7,7 +7,7 @@ using Shared.Entities;
 
 namespace DataAccesLayer.Models
 {
-    internal class Personas
+    public class Personas
     {
         //public Personas()
         //{
