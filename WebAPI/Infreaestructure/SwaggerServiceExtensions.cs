@@ -36,13 +36,16 @@ namespace WebAPI.Infreaestructure
         public static IApplicationBuilder UseSwaggerDocumentation(this IApplicationBuilder app)
         {
             app.UseSwagger();
-            app.UseSwaggerUI(c =>
-            {
-                c.SwaggerEndpoint("/swagger/v1.0/swagger.json", "Versioned API v1.0");
 
-                c.DocumentTitle = ".NET Core API Template With MySQL - v1.0";
-                c.DocExpansion(DocExpansion.None);
+            app.UseSwaggerUI(s =>
+            {
+                s.RoutePrefix = "help";
+                s.SwaggerEndpoint("/NETCoreAPI/swagger/v1.0/swagger.json", "NETCoreAPI");
+                s.InjectStylesheet("/NETCoreAPI/swagger/swagger-ui.css");
+                s.DocumentTitle = ".NET Core API Template With MySQL - v1.0";
+                s.DocExpansion(DocExpansion.None);
             });
+
 
             return app;
         }

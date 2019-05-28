@@ -28,7 +28,7 @@ namespace DataAccesLayer
 
         public DbSet<Personas> Personas { get; set; }
         public DbSet<Personas_Contactos> Personas_Contactos { get; set; }
-
         public DbSet<Personas_Contactos_Tipos> Personas_Contactos_Tipos { get; set; }
+        public DbSet<Noticias> Noticias { get; set; }
     }
 }

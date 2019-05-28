@@ -16,6 +16,27 @@ namespace DataAccesLayer.Migrations
                 .HasAnnotation("ProductVersion", "2.2.4-servicing-10062")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
+            modelBuilder.Entity("DataAccesLayer.Models.Noticias", b =>
+                {
+                    b.Property<long>("Id_Noticia")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<bool>("Activa");
+
+                    b.Property<DateTime>("FechaHora");
+
+                    b.Property<string>("Imagen")
+                        .HasMaxLength(2147483647);
+
+                    b.Property<string>("Titulo")
+                        .IsRequired()
+                        .HasMaxLength(128);
+
+                    b.HasKey("Id_Noticia");
+
+                    b.ToTable("Noticias");
+                });
+
             modelBuilder.Entity("DataAccesLayer.Models.Personas", b =>
                 {
                     b.Property<long>("Id_Persona")
