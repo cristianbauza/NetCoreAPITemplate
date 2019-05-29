@@ -40,8 +40,8 @@ namespace WebAPI.Infreaestructure
             app.UseSwaggerUI(s =>
             {
                 s.RoutePrefix = "help";
-                s.SwaggerEndpoint("/NETCoreAPI/swagger/v1.0/swagger.json", "NETCoreAPI");
-                s.InjectStylesheet("/NETCoreAPI/swagger/swagger-ui.css");
+                s.SwaggerEndpoint("/swagger/v1.0/swagger.json", "NETCoreAPI");
+                s.InjectStylesheet("/swagger/swagger-ui.css");
                 s.DocumentTitle = ".NET Core API Template With MySQL - v1.0";
                 s.DocExpansion(DocExpansion.None);
             });

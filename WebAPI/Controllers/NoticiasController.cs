@@ -28,6 +28,13 @@ namespace WebAPI.Controllers
             return await _context.Noticias.ToListAsync();
         }
 
+        // GET: api/Noticias
+        [HttpGet("activas")]
+        public async Task<ActionResult<IEnumerable<Noticias>>> GetNoticiasActivas()
+        {
+            return await _context.Noticias.Where(x => x.Activa).ToListAsync();
+        }
+
         // GET: api/Noticias/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Noticias>> GetNoticias(long id)

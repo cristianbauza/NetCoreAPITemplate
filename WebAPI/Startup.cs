@@ -111,7 +111,7 @@ namespace WebAPI
 
             // Colocamos un delay de 10 s. para que le de tiempo a levantar 
             // el container de la base de datos.
-            Task.Delay(10000).Wait();
+            // Task.Delay(10000).Wait();
 
             // ===== Create tables ======
             //dbContext.Database.EnsureCreated();
@@ -122,9 +122,9 @@ namespace WebAPI
         private static string GetConnectionString()
         {
             const string databaseHost = "localhost";
-            const string databaseName = "webapi";
+            const string databaseName = "tdw2019";
             const string databaseUser = "root";
-            const string databasePass = "apache*2013";
+            const string databasePass = "tdw2019";
 
             return $"Server={databaseHost};" +
                     $"database={databaseName};" +

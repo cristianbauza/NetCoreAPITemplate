@@ -17,9 +17,9 @@ namespace DataAccesLayer
         private static string GetConnectionString()
         {
             const string databaseHost = "localhost";
-            const string databaseName = "webapi";
+            const string databaseName = "tdw2019";
             const string databaseUser = "root";
-            const string databasePass = "apache*2013";
+            const string databasePass = "tdw2019";
 
             return $"Server={databaseHost};" +
                     $"database={databaseName};" +
