@@ -45,7 +45,8 @@ namespace WebAPI.Controllers
             {
                 var appUser = _userManager.Users.SingleOrDefault(r => r.Email == model.Email);
                 var res = GenerateJwtTokenAsync(model.Email, appUser);
-
+                var aux = res.Result;
+                
                 return res;
             }
 
