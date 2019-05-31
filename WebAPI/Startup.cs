@@ -22,6 +22,8 @@ using BusinessLayer.Interfaces;
 using BusinessLayer.Implementations;
 using DataAccesLayer.DALs.Interfaces;
 using DataAccesLayer.DALs.Implementatios;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Cors.Internal;
 
 namespace WebAPI
 {
@@ -39,6 +41,13 @@ namespace WebAPI
         {
             // ===== Add our DbContext ========
             services.AddDbContext<ApplicationDbContext>(options => options.UseMySql(GetConnectionString()));
+
+            services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
+            {
+                builder.AllowAnyOrigin()
+                       .AllowAnyMethod()
+                       .AllowAnyHeader();
+            }));
 
             // ===== Add Identity ========
             services.AddIdentity<IdentityUser, IdentityRole>(options => {
@@ -103,6 +112,9 @@ namespace WebAPI
                 app.UseDeveloperExceptionPage();
                 //app.UseSwaggerDocumentation();
             }
+
+            app.UseCors("MyPolicy");
+
             app.UseSwaggerDocumentation();
 
             app.UseAuthentication();
@@ -117,6 +129,13 @@ namespace WebAPI
             //dbContext.Database.EnsureCreated();
             //if (!env.IsDevelopment())
                 dbContext.Database.Migrate();
+
+            //if (!app.ApplicationServices.GetRequiredService<RoleManager<IdentityRole>>().RoleExistsAsync("USER").Result)
+            //    app.ApplicationServices.GetRequiredService<RoleManager<IdentityRole>>().CreateAsync(new IdentityRole("USER"));
+
+            //if (!app.ApplicationServices.GetRequiredService<RoleManager<IdentityRole>>().RoleExistsAsync("ADMIN").Result)
+            //    app.ApplicationServices.GetRequiredService<RoleManager<IdentityRole>>().CreateAsync(new IdentityRole("ADMIN"));
+
         }
 
         private static string GetConnectionString()

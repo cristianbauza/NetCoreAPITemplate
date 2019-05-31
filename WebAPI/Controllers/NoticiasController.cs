@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using DataAccesLayer;
 using DataAccesLayer.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebAPI.Controllers
 {
@@ -37,6 +38,7 @@ namespace WebAPI.Controllers
 
         // GET: api/Noticias/5
         [HttpGet("{id}")]
+        [Authorize(Roles = "USER")]
         public async Task<ActionResult<Noticias>> GetNoticias(long id)
         {
             var noticias = await _context.Noticias.FindAsync(id);
@@ -58,6 +60,8 @@ namespace WebAPI.Controllers
                 return BadRequest();
             }
 
+            Noticias aux = _context.Noticias.Find(id);
+            noticias.FechaHora = aux.FechaHora;
             _context.Entry(noticias).State = EntityState.Modified;
 
             try
@@ -83,6 +87,8 @@ namespace WebAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<Noticias>> PostNoticias(Noticias noticias)
         {
+
+            noticias.FechaHora = DateTime.Now;
             _context.Noticias.Add(noticias);
             await _context.SaveChangesAsync();
 

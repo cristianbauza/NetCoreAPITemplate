@@ -6,27 +6,29 @@ using System.Text;
 
 namespace DataAccesLayer.Models
 {
-    public class Noticias
+    public class Consultas
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
-        public long Id_Noticia { get; set; }
+        public long Id_Consulta { get; set; }
+
+        public DateTime FechaHora { get; set; }
 
         [MaxLength(128), MinLength(3), Required]
         public string Titulo { get; set; }
 
-        public DateTime FechaHora { get; set; }
+        [MaxLength(Int32.MaxValue), MinLength(0)]
+        public string Consulta { get; set; }
 
-        public bool Activa { get; set; }
-
-        [MaxLength(Int32.MaxValue), MinLength(3)]
-        public string Imagen { get; set; }
+        public bool ConsultaVista { get; set; }
 
         [MaxLength(Int32.MaxValue), MinLength(0)]
-        public string Texto { get; set; }
+        public string Respuesta { get; set; }
+
+        public bool RespuestaVista { get; set; }
 
 
 
-        public Microsoft.AspNetCore.Identity.IdentityUser Usuario { get; set; }
+         public ApplicationUser User { get; set; }
     }
 }

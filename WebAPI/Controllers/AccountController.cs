@@ -46,8 +46,12 @@ namespace WebAPI.Controllers
                 var appUser = _userManager.Users.SingleOrDefault(r => r.Email == model.Email);
                 var res = GenerateJwtTokenAsync(model.Email, appUser);
                 var aux = res.Result;
-                
-                return res;
+
+                return new DataAccesLayer.Models.LoginModel() {
+                    token = aux.ToString(),
+                    email = model.Email,
+                    role = (await _userManager.GetRolesAsync(appUser)).FirstOrDefault()
+                };
             }
 
             throw new ApplicationException("INVALID_LOGIN_ATTEMPT");
@@ -66,8 +70,18 @@ namespace WebAPI.Controllers
 
             if (result.Succeeded)
             {
+                List<string> l = new List<string>();
+                l.Add("USER");
+                await _userManager.AddToRolesAsync(user, l);
+
                 await _signInManager.SignInAsync(user, false);
-                return GenerateJwtTokenAsync(model.Email, user);
+                var aux = GenerateJwtTokenAsync(model.Email, user);
+
+                return new DataAccesLayer.Models.LoginModel() {
+                    token = aux.Result.ToString(),
+                    email = model.Email,
+                    role = "USER",
+                };
             }
 
             throw new ApplicationException("UNKNOWN_ERROR");
