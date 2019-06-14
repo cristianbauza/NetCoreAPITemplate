@@ -1,4 +1,5 @@
 ﻿using DataAccesLayer.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Shared.Entities;
@@ -30,5 +31,6 @@ namespace DataAccesLayer
         public DbSet<Personas_Contactos> Personas_Contactos { get; set; }
         public DbSet<Personas_Contactos_Tipos> Personas_Contactos_Tipos { get; set; }
         public DbSet<Noticias> Noticias { get; set; }
+        public DbSet<Consultas> Consultas { get; set; }
     }
 }

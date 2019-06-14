@@ -16,6 +16,34 @@ namespace DataAccesLayer.Migrations
                 .HasAnnotation("ProductVersion", "2.2.4-servicing-10062")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
+            modelBuilder.Entity("DataAccesLayer.Models.Consultas", b =>
+                {
+                    b.Property<long>("Id_Consulta")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Consulta")
+                        .HasMaxLength(2147483647);
+
+                    b.Property<bool>("ConsultaVista");
+
+                    b.Property<DateTime>("FechaHora");
+
+                    b.Property<string>("Respuesta")
+                        .HasMaxLength(2147483647);
+
+                    b.Property<bool>("RespuestaVista");
+
+                    b.Property<string>("Titulo")
+                        .IsRequired()
+                        .HasMaxLength(128);
+
+                    b.Property<string>("Usuario");
+
+                    b.HasKey("Id_Consulta");
+
+                    b.ToTable("Consultas");
+                });
+
             modelBuilder.Entity("DataAccesLayer.Models.Noticias", b =>
                 {
                     b.Property<long>("Id_Noticia")
@@ -26,6 +54,9 @@ namespace DataAccesLayer.Migrations
                     b.Property<DateTime>("FechaHora");
 
                     b.Property<string>("Imagen")
+                        .HasMaxLength(2147483647);
+
+                    b.Property<string>("Texto")
                         .HasMaxLength(2147483647);
 
                     b.Property<string>("Titulo")

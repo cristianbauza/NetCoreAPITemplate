@@ -24,9 +24,5 @@ namespace DataAccesLayer.Models
 
         [MaxLength(Int32.MaxValue), MinLength(0)]
         public string Texto { get; set; }
-
-
-
-        public Microsoft.AspNetCore.Identity.IdentityUser Usuario { get; set; }
     }
 }

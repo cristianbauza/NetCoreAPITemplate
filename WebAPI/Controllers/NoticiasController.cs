@@ -26,14 +26,28 @@ namespace WebAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Noticias>>> GetNoticias()
         {
-            return await _context.Noticias.ToListAsync();
+            try
+            {
+                return await _context.Noticias.ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
         }
 
         // GET: api/Noticias
         [HttpGet("activas")]
         public async Task<ActionResult<IEnumerable<Noticias>>> GetNoticiasActivas()
         {
-            return await _context.Noticias.Where(x => x.Activa).ToListAsync();
+            try
+            {
+                return await _context.Noticias.Where(x => x.Activa).ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
         }
 
         // GET: api/Noticias/5
@@ -41,79 +55,103 @@ namespace WebAPI.Controllers
         [Authorize(Roles = "USER")]
         public async Task<ActionResult<Noticias>> GetNoticias(long id)
         {
-            var noticias = await _context.Noticias.FindAsync(id);
-
-            if (noticias == null)
+            try
             {
-                return NotFound();
-            }
+                var noticias = await _context.Noticias.FindAsync(id);
 
-            return noticias;
+                if (noticias == null)
+                {
+                    return NotFound();
+                }
+
+                return Ok(noticias);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
         }
 
         // PUT: api/Noticias/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutNoticias(long id, Noticias noticias)
+        public async Task<ActionResult<Noticias>> PutNoticias(long id, Noticias noticias)
         {
-            if (id != noticias.Id_Noticia)
-            {
-                return BadRequest();
-            }
-
-            Noticias aux = _context.Noticias.Find(id);
-            noticias.FechaHora = aux.FechaHora;
-            _context.Entry(noticias).State = EntityState.Modified;
-
             try
             {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!NoticiasExists(id))
+                if (id != noticias.Id_Noticia)
                 {
-                    return NotFound();
+                    return BadRequest();
                 }
-                else
-                {
-                    throw;
-                }
-            }
 
-            return NoContent();
+                Noticias aux = _context.Noticias.Find(id);
+
+                if (aux == null)
+                    throw new Exception("No existe una noticia con id " + id);
+
+                noticias.FechaHora = aux.FechaHora;
+                _context.Entry(noticias).State = EntityState.Modified;
+
+                await _context.SaveChangesAsync();
+
+                return Ok(noticias);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
         }
 
         // POST: api/Noticias
         [HttpPost]
         public async Task<ActionResult<Noticias>> PostNoticias(Noticias noticias)
         {
+            try
+            {
+                noticias.FechaHora = DateTime.Now;
+                _context.Noticias.Add(noticias);
+                await _context.SaveChangesAsync();
 
-            noticias.FechaHora = DateTime.Now;
-            _context.Noticias.Add(noticias);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetNoticias", new { id = noticias.Id_Noticia }, noticias);
+                return CreatedAtAction("GetNoticias", new { id = noticias.Id_Noticia }, noticias);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
         }
 
         // DELETE: api/Noticias/5
         [HttpDelete("{id}")]
         public async Task<ActionResult<Noticias>> DeleteNoticias(long id)
         {
-            var noticias = await _context.Noticias.FindAsync(id);
-            if (noticias == null)
+            try
             {
-                return NotFound();
+                var noticias = await _context.Noticias.FindAsync(id);
+                if (noticias == null)
+                {
+                    return NotFound();
+                }
+
+                _context.Noticias.Remove(noticias);
+                await _context.SaveChangesAsync();
+
+                return noticias;
             }
-
-            _context.Noticias.Remove(noticias);
-            await _context.SaveChangesAsync();
-
-            return noticias;
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
         }
 
         private bool NoticiasExists(long id)
         {
-            return _context.Noticias.Any(e => e.Id_Noticia == id);
+            try
+            {
+                return _context.Noticias.Any(e => e.Id_Noticia == id);
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
     }
 }

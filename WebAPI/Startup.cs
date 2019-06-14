@@ -40,7 +40,7 @@ namespace WebAPI
         public void ConfigureServices(IServiceCollection services)
         {
             // ===== Add our DbContext ========
-            services.AddDbContext<ApplicationDbContext>(options => options.UseMySql(GetConnectionString()));
+            services.AddDbContext<ApplicationDbContext>(options => options.UseMySql(Configuration["ConnectionString:default"]));
 
             services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
             {
@@ -115,7 +115,7 @@ namespace WebAPI
 
             app.UseCors("MyPolicy");
 
-            app.UseSwaggerDocumentation();
+            app.UseSwaggerDocumentation(Configuration);
 
             app.UseAuthentication();
 
@@ -136,20 +136,6 @@ namespace WebAPI
             //if (!app.ApplicationServices.GetRequiredService<RoleManager<IdentityRole>>().RoleExistsAsync("ADMIN").Result)
             //    app.ApplicationServices.GetRequiredService<RoleManager<IdentityRole>>().CreateAsync(new IdentityRole("ADMIN"));
 
-        }
-
-        private static string GetConnectionString()
-        {
-            const string databaseHost = "localhost";
-            const string databaseName = "tdw2019";
-            const string databaseUser = "root";
-            const string databasePass = "tdw2019";
-
-            return $"Server={databaseHost};" +
-                    $"database={databaseName};" +
-                    $"uid={databaseUser};" +
-                    $"pwd={databasePass};" +
-                    $"pooling=true;";
         }
     }
 }

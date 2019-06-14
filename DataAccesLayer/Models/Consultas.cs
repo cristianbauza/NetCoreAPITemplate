@@ -27,8 +27,6 @@ namespace DataAccesLayer.Models
 
         public bool RespuestaVista { get; set; }
 
-
-
-         public ApplicationUser User { get; set; }
+        public string Usuario { get; set; }
     }
 }
