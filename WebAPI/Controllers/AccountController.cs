@@ -12,6 +12,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authorization;
 using Shared.DTOs;
+using DataAccesLayer;
+using DataAccesLayer.Models;
 
 namespace WebAPI.Controllers
 {
@@ -22,21 +24,27 @@ namespace WebAPI.Controllers
         private readonly UserManager<IdentityUser> _userManager;
         private readonly IConfiguration _configuration;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly ApplicationDbContext _context;
+
 
         public AccountController(
             UserManager<IdentityUser> userManager,
             SignInManager<IdentityUser> signInManager,
             IConfiguration configuration,
-            RoleManager<IdentityRole> rolManager
+            RoleManager<IdentityRole> rolManager,
+            ApplicationDbContext context
             )
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _configuration = configuration;
             _roleManager = rolManager;
+            _context = context;
         }
 
         [HttpPost]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
         public async Task<object> Login([FromBody] LoginDto model)
         {
             var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, false, false);
@@ -47,44 +55,86 @@ namespace WebAPI.Controllers
                 var res = GenerateJwtTokenAsync(model.Email, appUser);
                 var aux = res.Result;
 
-                return new DataAccesLayer.Models.LoginModel() {
+                Cliente cli = _context.Clientes.FirstOrDefault(x => x.Usuario == model.Email);
+
+                return new LoginModel() {
                     token = aux.ToString(),
                     email = model.Email,
-                    role = (await _userManager.GetRolesAsync(appUser)).FirstOrDefault()
+                    role = (await _userManager.GetRolesAsync(appUser)).FirstOrDefault(),
+                    Apellidos = cli == null ? "" : cli.Apellidos,
+                    Nombres = cli == null ? "" : cli.Nombres,
+                    Documento = cli == null ? "" : cli.Documento,
                 };
             }
 
-            throw new ApplicationException("INVALID_LOGIN_ATTEMPT");
+            return StatusCode(500, "Usuario o contraseña incorrecta.");
         }
 
         [HttpPost]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(500)]
         public async Task<object> Register([FromBody] RegistroDto model)
         {
-            var user = new IdentityUser
+            try
             {
-                UserName = model.Email,
-                Email = model.Email
-            };
-
-            var result = await _userManager.CreateAsync(user, model.Password);
-
-            if (result.Succeeded)
-            {
-                List<string> l = new List<string>();
-                l.Add("USER");
-                await _userManager.AddToRolesAsync(user, l);
-
-                await _signInManager.SignInAsync(user, false);
-                var aux = GenerateJwtTokenAsync(model.Email, user);
-
-                return new DataAccesLayer.Models.LoginModel() {
-                    token = aux.Result.ToString(),
-                    email = model.Email,
-                    role = "USER",
+                var user = new IdentityUser
+                {
+                    UserName = model.Email,
+                    Email = model.Email
                 };
-            }
 
-            throw new ApplicationException("UNKNOWN_ERROR");
+                if (model.Nombres == null || model.Nombres.Length < 3)
+                    model.Nombres = "Nombres";
+
+                if (model.Apellidos == null || model.Apellidos.Length < 3)
+                    model.Apellidos = "Apellidos";
+
+                if (model.Documento == null || model.Documento.Length < 3)
+                    model.Documento = "Documento";
+
+                if (model.Apellidos.Length < 3 || model.Nombres.Length < 3 || model.Documento.Length < 3)
+                    return StatusCode(500, "El nombre, apellido y documento del usuario tienen que tener mas de 3 caracteres.");
+
+                var result = await _userManager.CreateAsync(user, model.Password);
+
+                if (result.Succeeded)
+                {
+                    Cliente cli = new Cliente()
+                    {
+                        Apellidos = model.Apellidos,
+                        Nombres = model.Nombres,
+                        Documento = model.Documento,
+                        Usuario = model.Email
+                    };
+                    _context.Clientes.Add(cli);
+                    _context.SaveChanges();
+
+                    List<string> l = new List<string>();
+                    l.Add("USER");
+                    await _userManager.AddToRolesAsync(user, l);
+
+                    await _signInManager.SignInAsync(user, false);
+                    var aux = GenerateJwtTokenAsync(model.Email, user);
+
+                    return new LoginModel()
+                    {
+                        token = aux.Result.ToString(),
+                        email = model.Email,
+                        role = "USER",
+                        Apellidos = model.Apellidos,
+                        Nombres = model.Nombres,
+                        Documento = model.Documento,
+                    };
+                }
+                else
+                {
+                    return StatusCode(500, "Error no contralado al crear el usuario.");
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
         }
 
         private async Task<object> GenerateJwtTokenAsync(string email, IdentityUser user)

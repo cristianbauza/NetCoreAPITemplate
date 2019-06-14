@@ -3,6 +3,7 @@ using System;
 using DataAccesLayer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DataAccesLayer.Migrations
 {
@@ -15,6 +16,32 @@ namespace DataAccesLayer.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "2.2.4-servicing-10062")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
+
+            modelBuilder.Entity("DataAccesLayer.Models.Cliente", b =>
+                {
+                    b.Property<long>("Id_Cliente")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Apellidos")
+                        .IsRequired()
+                        .HasMaxLength(128);
+
+                    b.Property<string>("Documento")
+                        .IsRequired()
+                        .HasMaxLength(128);
+
+                    b.Property<string>("Nombres")
+                        .IsRequired()
+                        .HasMaxLength(128);
+
+                    b.Property<string>("Usuario")
+                        .IsRequired()
+                        .HasMaxLength(128);
+
+                    b.HasKey("Id_Cliente");
+
+                    b.ToTable("Clientes");
+                });
 
             modelBuilder.Entity("DataAccesLayer.Models.Consultas", b =>
                 {
@@ -138,6 +165,24 @@ namespace DataAccesLayer.Migrations
                     b.HasKey("Id_PerContTipo");
 
                     b.ToTable("Personas_Contactos_Tipos");
+                });
+
+            modelBuilder.Entity("DataAccesLayer.Models.TipoDeSeguro", b =>
+                {
+                    b.Property<long>("Id_TipoDeSeguro")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Color")
+                        .IsRequired()
+                        .HasMaxLength(128);
+
+                    b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasMaxLength(128);
+
+                    b.HasKey("Id_TipoDeSeguro");
+
+                    b.ToTable("TiposDeSeguros");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

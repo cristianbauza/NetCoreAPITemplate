@@ -6,18 +6,22 @@ using System.Text;
 
 namespace DataAccesLayer.Models
 {
-    public class Personas_Contactos_Tipos
+    public class Cliente
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
-        public long Id_PerContTipo { get; set; }
+        public long Id_Cliente { get; set; }
 
         [MaxLength(128), MinLength(3), Required]
-        public string Nombre { get; set; }
+        public string Apellidos { get; set; }
 
         [MaxLength(128), MinLength(3), Required]
-        public string RegExp { get; set; }
+        public string Nombres { get; set; }
 
-        public Personas_Contactos_Tipos() { }
+        [MaxLength(128), MinLength(3), Required]
+        public string Documento { get; set; }
+
+        [MaxLength(128), MinLength(3), Required]
+        public string Usuario { get; set; }
     }
 }

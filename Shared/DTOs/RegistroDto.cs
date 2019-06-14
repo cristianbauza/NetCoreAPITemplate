@@ -11,7 +11,16 @@ namespace Shared.DTOs
         public string Email { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "PASSWORD_MIN_LENGTH", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "PASSWORD_MIN_LENGTH", MinimumLength = 4)]
         public string Password { get; set; }
+
+        [MaxLength(128), MinLength(3), Required]
+        public string Apellidos { get; set; }
+
+        [MaxLength(128), MinLength(3), Required]
+        public string Nombres { get; set; }
+
+        [MaxLength(128), MinLength(3), Required]
+        public string Documento { get; set; }
     }
 }

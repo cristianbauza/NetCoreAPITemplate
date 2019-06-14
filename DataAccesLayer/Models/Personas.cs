@@ -9,10 +9,10 @@ namespace DataAccesLayer.Models
 {
     public class Personas
     {
-        //public Personas()
-        //{
-        //    Contactos = new List<Personas_Contactos>();
-        //}
+        public Personas()
+        {
+            //Contactos = new List<Personas_Contactos>();
+        }
 
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]

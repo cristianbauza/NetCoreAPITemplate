@@ -88,6 +88,8 @@ namespace WebAPI.Controllers
                 if (aux == null)
                     throw new Exception("No existe una noticia con id " + id);
 
+                _context.Entry(aux).State = EntityState.Detached;
+
                 noticias.FechaHora = aux.FechaHora;
                 _context.Entry(noticias).State = EntityState.Modified;
 

@@ -9,15 +9,10 @@ namespace DataAccesLayer
     {
         public IConfiguration Configuration { get; }
 
-        public DBContextFactory(IConfiguration _conf)
-        {
-            Configuration = _conf;
-        }
-
         public ApplicationDbContext CreateDbContext(string[] args)
         {
             var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
-            optionsBuilder.UseMySql(Configuration["ConnectionString:default"]);
+            optionsBuilder.UseMySql("Server=localhost;database=tdw2019gr3;uid=root;pwd=tdw2019;pooling=true;");
 
             return new ApplicationDbContext(optionsBuilder.Options);
         }

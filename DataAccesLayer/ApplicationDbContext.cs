@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using Shared.Entities;
 using System;
 using System.Collections.Generic;
@@ -16,21 +17,12 @@ namespace DataAccesLayer
             : base(options)
         { }
 
-
-        //protected override void OnModelCreating(ModelBuilder modelBuilder)
-        //{
-        //    modelBuilder.Entity<Personas_Contactos>(entity =>
-        //    {
-        //    entity.HasOne(d => d.Persona)
-        //        .WithMany(p => p.)
-        //            .HasForeignKey(d => d.);
-        //    });
-        //}
-
         public DbSet<Personas> Personas { get; set; }
         public DbSet<Personas_Contactos> Personas_Contactos { get; set; }
         public DbSet<Personas_Contactos_Tipos> Personas_Contactos_Tipos { get; set; }
         public DbSet<Noticias> Noticias { get; set; }
         public DbSet<Consultas> Consultas { get; set; }
+        public DbSet<TipoDeSeguro> TiposDeSeguros { get; set; }
+        public DbSet<Cliente> Clientes { get; set; }
     }
 }
