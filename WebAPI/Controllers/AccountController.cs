@@ -43,8 +43,8 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost]
-        [ProducesResponseType(200)]
-        [ProducesResponseType(400)]
+        [ProducesResponseType(typeof(LoginModel), 200)]
+        [ProducesResponseType(500)]
         public async Task<object> Login([FromBody] LoginDto model)
         {
             var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, false, false);
@@ -71,7 +71,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost]
-        [ProducesResponseType(200)]
+        [ProducesResponseType(typeof(LoginModel), 200)]
         [ProducesResponseType(500)]
         public async Task<object> Register([FromBody] RegistroDto model)
         {

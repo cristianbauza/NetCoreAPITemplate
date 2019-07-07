@@ -167,6 +167,40 @@ namespace DataAccesLayer.Migrations
                     b.ToTable("Personas_Contactos_Tipos");
                 });
 
+            modelBuilder.Entity("DataAccesLayer.Models.Seguros", b =>
+                {
+                    b.Property<long>("Id_DeSeguro")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<long?>("ClienteId_Cliente");
+
+                    b.Property<decimal>("CostoTotal")
+                        .HasColumnType("decimal(10, 2)");
+
+                    b.Property<string>("Descripccion")
+                        .HasMaxLength(2048);
+
+                    b.Property<string>("DocumentoPDF")
+                        .HasMaxLength(2147483647);
+
+                    b.Property<DateTime>("FechaFechaFin");
+
+                    b.Property<DateTime>("FechaInicio");
+
+                    b.Property<long?>("TipoId_TipoDeSeguro");
+
+                    b.Property<string>("Titulo")
+                        .HasMaxLength(128);
+
+                    b.HasKey("Id_DeSeguro");
+
+                    b.HasIndex("ClienteId_Cliente");
+
+                    b.HasIndex("TipoId_TipoDeSeguro");
+
+                    b.ToTable("Seguros");
+                });
+
             modelBuilder.Entity("DataAccesLayer.Models.TipoDeSeguro", b =>
                 {
                     b.Property<long>("Id_TipoDeSeguro")
@@ -351,6 +385,17 @@ namespace DataAccesLayer.Migrations
                     b.HasOne("DataAccesLayer.Models.Personas_Contactos_Tipos", "TipoContacto")
                         .WithMany()
                         .HasForeignKey("TipoContactoId_PerContTipo");
+                });
+
+            modelBuilder.Entity("DataAccesLayer.Models.Seguros", b =>
+                {
+                    b.HasOne("DataAccesLayer.Models.Cliente", "Cliente")
+                        .WithMany()
+                        .HasForeignKey("ClienteId_Cliente");
+
+                    b.HasOne("DataAccesLayer.Models.TipoDeSeguro", "Tipo")
+                        .WithMany()
+                        .HasForeignKey("TipoId_TipoDeSeguro");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

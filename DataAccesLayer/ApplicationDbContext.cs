@@ -24,5 +24,6 @@ namespace DataAccesLayer
         public DbSet<Consultas> Consultas { get; set; }
         public DbSet<TipoDeSeguro> TiposDeSeguros { get; set; }
         public DbSet<Cliente> Clientes { get; set; }
+        public DbSet<Seguros> Seguros { get; set; }
     }
 }

@@ -24,6 +24,7 @@ namespace WebAPI.Controllers
 
         // GET: api/Noticias
         [HttpGet]
+        [Authorize(Roles = "ADMIN")]
         public async Task<ActionResult<IEnumerable<Noticias>>> GetNoticias()
         {
             try
@@ -52,7 +53,6 @@ namespace WebAPI.Controllers
 
         // GET: api/Noticias/5
         [HttpGet("{id}")]
-        [Authorize(Roles = "USER")]
         public async Task<ActionResult<Noticias>> GetNoticias(long id)
         {
             try
@@ -74,6 +74,7 @@ namespace WebAPI.Controllers
 
         // PUT: api/Noticias/5
         [HttpPut("{id}")]
+        [Authorize(Roles = "ADMIN")]
         public async Task<ActionResult<Noticias>> PutNoticias(long id, Noticias noticias)
         {
             try
@@ -105,6 +106,7 @@ namespace WebAPI.Controllers
 
         // POST: api/Noticias
         [HttpPost]
+        [Authorize(Roles = "ADMIN")]
         public async Task<ActionResult<Noticias>> PostNoticias(Noticias noticias)
         {
             try
@@ -123,6 +125,7 @@ namespace WebAPI.Controllers
 
         // DELETE: api/Noticias/5
         [HttpDelete("{id}")]
+        [Authorize(Roles = "ADMIN")]
         public async Task<ActionResult<Noticias>> DeleteNoticias(long id)
         {
             try

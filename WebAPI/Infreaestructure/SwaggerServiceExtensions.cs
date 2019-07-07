@@ -43,6 +43,8 @@ namespace WebAPI.Infreaestructure
                 s.RoutePrefix = "help";
                 s.SwaggerEndpoint(conf["SwaggerPath"] + "/swagger/v1.0/swagger.json", "NETCoreAPI");
                 s.InjectStylesheet(conf["SwaggerPath"] + "/swagger/swagger-ui.css");
+                //s.SwaggerEndpoint(conf["SwaggerPath"] + "/v1.0/swagger.json", "NETCoreAPI");
+                //s.InjectStylesheet(conf["SwaggerPath"] + "/swagger-ui.css");
                 s.DocumentTitle = ".NET Core API Template With MySQL - v1.0";
                 s.DocExpansion(DocExpansion.None);
             });
