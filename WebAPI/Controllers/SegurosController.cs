@@ -52,9 +52,18 @@ namespace WebAPI.Controllers
             try
             {
                 var aux = _context.Clientes.ToList();
+
                 List<ClienteDTO> result = new List<ClienteDTO>();
-                aux.ForEach(x => result.Add(new ClienteDTO() { Id = x.Id_Cliente, Documento = x.Documento, Nombre = x.Apellidos.Trim() + ", " + x.Apellidos.Trim()}));
-                aux = aux.Where(x => x.Nombres.Contains(filtro) || x.Documento.Contains(filtro)).ToList();
+
+                aux.ForEach(x => 
+                    result.Add(new ClienteDTO() { Id = x.Id_Cliente,
+                                                  Documento = x.Documento,
+                                                  Nombre = x.Apellidos.Trim() + ", " + x.Nombres.Trim()
+                                                })
+                    );
+
+                result = result.Where(x => x.Nombre.ToUpper().Contains(filtro.ToUpper()) || x.Documento.ToUpper().Contains(filtro.ToUpper())).ToList();
+
                 return result;
             }
             catch (Exception ex)
@@ -72,6 +81,8 @@ namespace WebAPI.Controllers
             {
                 var user = await _userManager.GetUserAsync(HttpContext.User);
                 Cliente c = _context.Clientes.FirstOrDefault(x => x.Usuario == user.Email);
+                if (c == null)
+                    throw new Exception("No existe un cliente con email " + user.Email);
                 
                 return await _context.Seguros
                                      .Where(x => x.Cliente.Id_Cliente == c.Id_Cliente)
@@ -92,15 +103,16 @@ namespace WebAPI.Controllers
         {
             try
             {
-                var seguros = await _context.Seguros.FindAsync(id);
-
+                var seguros = await _context
+                                    .Seguros
+                                    .Where(x => x.Id_DeSeguro == id)
+                                     .Include(x => x.Cliente)
+                                     .Include(x => x.Tipo)
+                                     .FirstOrDefaultAsync();
                 if (seguros == null)
-                {
-                    return NotFound();
-                }
+                    throw new Exception("No existe ningún seguro con id " + id);
 
                 return seguros;
-
             }
             catch (Exception ex)
             {
@@ -121,6 +133,9 @@ namespace WebAPI.Controllers
                 }
 
                 Seguros aux = _context.Seguros.Find(id);
+                if (aux == null)
+                    throw new Exception("No existe un seguro con id " + seguros.Id_DeSeguro);
+
                 Cliente c = _context.Clientes.Find(seguros.Id_Cliente);
                 if (c == null)
                     throw new Exception("No existe un cliente con id " + seguros.Id_Cliente);
@@ -140,21 +155,7 @@ namespace WebAPI.Controllers
 
                 _context.Entry(aux).State = EntityState.Modified;
 
-                try
-                {
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!SegurosExists(id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
+                await _context.SaveChangesAsync();
 
                 return Ok(aux);
             }
